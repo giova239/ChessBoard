@@ -1,4 +1,4 @@
-TO LOAD LOCAL RESOURCES
+========INSTALL THIS BEFORE OPENING HTML TO LOAD LOCAL RESOURCES:========
 
 Install ->
 npm install -g http-server
@@ -6,8 +6,14 @@ npm install -g http-server
 Run Server ->
 http-server ./
 
-Get Resource ->
-url('http://localhost:8080/waw.png')
 
-#TODO: Proper Chess class
-#TODO: Piece Eating and Moving checks
+
+=================================TODOS:==================================
+
+#TODO: Create a proper ChessGame class
+
+#TODO: Chess class must have a 
+            let game = new ChessGame
+            game.getLegalMoves(Square) -> List of Squares
+
+#TODO: use ChessGame class to draw legal moves when a piece is selected
