@@ -147,6 +147,10 @@ let squares = document.getElementsByTagName("Square");
 
         //PRINT MOVE
         console.log(draggedPiece + " moved from " + draggedSquare + " -> " + targetSquare);
+
+
+        //TODO: check if move is legal
+        
         
         //UPDATE TARGET SQUARE
         event.target.classList.replace(targetPiece, draggedPiece);
