@@ -13,6 +13,19 @@
     transform: scale(1.15);
 }
 
+/* TARGET STYLES */
+.Empty.target{
+    margin:auto;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background: lime;
+    filter: drop-shadow(0 0 0.4rem lime);
+}
+.target{
+    filter: drop-shadow(0 0 0.7rem red);
+}
+
 /* BOARD */
 Board{
     display: grid;
