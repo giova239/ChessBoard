@@ -99,48 +99,64 @@ let squares = document.getElementsByTagName("Square");
 
 [...squares].forEach((elem)=> {
 
-    if(!elem.classList.contains("Empty")){
-    
-        //Make Draggable
+    //Make Pieces Draggable
+    if(elem.classList.contains("Empty")){
+        elem.setAttribute("draggable", false);
+    }else{
         elem.setAttribute("draggable", true);
-
-        //Mouse overing
-        elem.onmouseover = () => {
-            elem.classList.add("overing");
-        };
-
-        elem.onmouseout = () => {
-            if(!elem.classList.contains("selected"))
-            elem.classList.remove("overing");
-        };
-
-        //Mouse cliccking
-        elem.onmousedown = () => {
-            [...document.getElementsByClassName("selected")].forEach((other)=>{
-                other.classList.remove("selected");
-                other.classList.remove("overing");
-            })
-            elem.classList.add("selected");
-            elem.classList.add("overing");
-        };
-
-        //Mouse Dragging
-        elem.ondragstart = () => {
-            elem.classList.add("dragging");
-        };
-
-        elem.ondragend = () => {
-            elem.classList.remove("dragging");
-        };
-
     }
+
+    //Mouse overing
+    elem.onmouseover = () => {
+        elem.classList.add("overing");
+    };
+
+    elem.onmouseout = () => {
+        if(!elem.classList.contains("selected"))
+        elem.classList.remove("overing");
+    };
+
+    //Mouse cliccking
+    elem.onmousedown = () => {
+        [...document.getElementsByClassName("selected")].forEach((other)=>{
+            other.classList.remove("selected");
+            other.classList.remove("overing");
+        })
+        elem.classList.add("selected");
+        elem.classList.add("overing");
+    };
+
+    //Mouse Dragging
+    elem.ondragstart = (event) => {
+        elem.id = "dragging";
+    };
 
     //Mouse Dropping
     elem.ondragenter = (event) => {event.preventDefault();};
     elem.ondragover = (event) => {event.preventDefault();};
     elem.ondrop = (event) => {
         event.preventDefault();
-        console.log(elem.classList);
+
+        //GET DRAGGED ELEMENT
+        let e = document.getElementById("dragging");
+        e.removeAttribute("id");
+        let draggedPiece = e.classList[1];
+        let targetPiece = event.target.classList[1];
+        let draggedSquare = e.classList[0];
+        let targetSquare = event.target.classList[0];
+
+        //PRINT MOVE
+        console.log(draggedPiece + " moved from " + draggedSquare + " -> " + targetSquare);
+        
+        //UPDATE TARGET SQUARE
+        event.target.classList.replace(targetPiece, draggedPiece);
+        event.target.setAttribute("draggable", true);
+
+        //UPDATE STARTING SQUARE
+        e.classList.remove("selected");
+        e.classList.remove("overing");
+        e.classList.replace(draggedPiece, "Empty");
+        e.setAttribute("draggable", false);
     };
 
 })
