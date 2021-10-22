@@ -128,7 +128,12 @@ let squares = document.getElementsByTagName("Square");
 
     //Mouse Dragging
     elem.ondragstart = (event) => {
+        event.dataTransfer.effectAllowed = "move";
         elem.id = "dragging";
+    };
+
+    elem.ondragend = () => {
+        elem.removeAttribute("id");
     };
 
     //Mouse Dropping
@@ -151,14 +156,12 @@ let squares = document.getElementsByTagName("Square");
 
         //TODO: check if move is legal
         
-        
+
         //UPDATE TARGET SQUARE
         event.target.classList.replace(targetPiece, draggedPiece);
         event.target.setAttribute("draggable", true);
 
         //UPDATE STARTING SQUARE
-        e.classList.remove("selected");
-        e.classList.remove("overing");
         e.classList.replace(draggedPiece, "Empty");
         e.setAttribute("draggable", false);
     };
