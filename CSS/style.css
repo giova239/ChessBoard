@@ -7,12 +7,10 @@
     opacity: 0.3;
 }
 .selected{
-    box-shadow:
-        0 0 40px 5px white,
-        0 0 40px 5px black;
+    filter: drop-shadow(0 0 1rem lime);
 }
 .overing{
-    transform: scale(1.1);
+    transform: scale(1.15);
 }
 
 /* BOARD */
@@ -27,66 +25,13 @@ Board{
     background-size: cover;
 }
 
-/* PIECE */
-Board > Piece{
+/* SQUARE */
+Board > Square{
     width: 100px;
     height: 100px;
 }
 
-/* BLACK PIECES */
-.Black_King{
-    background: url("http://localhost:8080/ASSETS/PIECES/DEFAULT/BLACK/Black_King.svg");
-    background-size: cover;
-}
-.Black_Queen{
-    background: url("http://localhost:8080/ASSETS/PIECES/DEFAULT/BLACK/Black_Queen.svg");
-    background-size: cover;
-}
-.Black_Rook{
-    background: url("http://localhost:8080/ASSETS/PIECES/DEFAULT/BLACK/Black_Rook.svg");
-    background-size: cover;
-}
-.Black_Bishop{
-    background: url("http://localhost:8080/ASSETS/PIECES/DEFAULT/BLACK/Black_Bishop.svg");
-    background-size: cover;
-}
-.Black_Knight{
-    background: url("http://localhost:8080/ASSETS/PIECES/DEFAULT/BLACK/Black_Knight.svg");
-    background-size: cover;
-}
-.Black_Pawn{
-    background: url("http://localhost:8080/ASSETS/PIECES/DEFAULT/BLACK/Black_Pawn.svg");
-    background-size: cover;
-}
-
-
-/* WHITE PIECES */
-.White_King{
-    background: url("http://localhost:8080/ASSETS/PIECES/DEFAULT/WHITE/White_King.svg");
-    background-size: cover;
-}
-.White_Queen{
-    background: url("http://localhost:8080/ASSETS/PIECES/DEFAULT/WHITE/White_Queen.svg");
-    background-size: cover;
-}
-.White_Rook{
-    background: url("http://localhost:8080/ASSETS/PIECES/DEFAULT/WHITE/White_Rook.svg");
-    background-size: cover;
-}
-.White_Bishop{
-    background: url("http://localhost:8080/ASSETS/PIECES/DEFAULT/WHITE/White_Bishop.svg");
-    background-size: cover;
-}
-.White_Knight{
-    background: url("http://localhost:8080/ASSETS/PIECES/DEFAULT/WHITE/White_Knight.svg");
-    background-size: cover;
-}
-.White_Pawn{
-    background: url("http://localhost:8080/ASSETS/PIECES/DEFAULT/WHITE/White_Pawn.svg");
-    background-size: cover;
-}
-
-/* PIECES POSITION */
+/* SQUARES NAMES */
 .a8{
     grid-column: 1;
     grid-row: 1;
@@ -342,4 +287,57 @@ Board > Piece{
 .h1{
     grid-column: 8;
     grid-row: 8;
+}
+
+/* BLACK PIECES */
+.Black_King{
+    background: url("http://localhost:8080/ASSETS/PIECES/DEFAULT/BLACK/Black_King.svg");
+    background-size: cover;
+}
+.Black_Queen{
+    background: url("http://localhost:8080/ASSETS/PIECES/DEFAULT/BLACK/Black_Queen.svg");
+    background-size: cover;
+}
+.Black_Rook{
+    background: url("http://localhost:8080/ASSETS/PIECES/DEFAULT/BLACK/Black_Rook.svg");
+    background-size: cover;
+}
+.Black_Bishop{
+    background: url("http://localhost:8080/ASSETS/PIECES/DEFAULT/BLACK/Black_Bishop.svg");
+    background-size: cover;
+}
+.Black_Knight{
+    background: url("http://localhost:8080/ASSETS/PIECES/DEFAULT/BLACK/Black_Knight.svg");
+    background-size: cover;
+}
+.Black_Pawn{
+    background: url("http://localhost:8080/ASSETS/PIECES/DEFAULT/BLACK/Black_Pawn.svg");
+    background-size: cover;
+}
+
+
+/* WHITE PIECES */
+.White_King{
+    background: url("http://localhost:8080/ASSETS/PIECES/DEFAULT/WHITE/White_King.svg");
+    background-size: cover;
+}
+.White_Queen{
+    background: url("http://localhost:8080/ASSETS/PIECES/DEFAULT/WHITE/White_Queen.svg");
+    background-size: cover;
+}
+.White_Rook{
+    background: url("http://localhost:8080/ASSETS/PIECES/DEFAULT/WHITE/White_Rook.svg");
+    background-size: cover;
+}
+.White_Bishop{
+    background: url("http://localhost:8080/ASSETS/PIECES/DEFAULT/WHITE/White_Bishop.svg");
+    background-size: cover;
+}
+.White_Knight{
+    background: url("http://localhost:8080/ASSETS/PIECES/DEFAULT/WHITE/White_Knight.svg");
+    background-size: cover;
+}
+.White_Pawn{
+    background: url("http://localhost:8080/ASSETS/PIECES/DEFAULT/WHITE/White_Pawn.svg");
+    background-size: cover;
 }
