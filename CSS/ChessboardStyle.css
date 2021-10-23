@@ -16,8 +16,8 @@
 /* TARGET STYLES */
 .Empty.target{
     margin:auto;
-    width: 30px;
-    height: 30px;
+    width: 35px;
+    height: 35px;
     border-radius: 50%;
     background: lime;
     filter: drop-shadow(0 0 0.4rem lime);
