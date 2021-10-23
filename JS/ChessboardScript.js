@@ -92,6 +92,9 @@ let squares = document.getElementsByTagName("Square");
             [...document.getElementsByClassName("target")].forEach((other)=>{
                 other.classList.remove("target");
             });
+            [...document.getElementsByClassName("targeted")].forEach((other)=>{
+                other.classList.remove("targeted");
+            });
 
             //GET LEGAL MOVES
             let legalMoves = chess.moves({square: elem.classList[0], verbose: true});
@@ -119,8 +122,15 @@ let squares = document.getElementsByTagName("Square");
     };
 
     //Mouse Dropping
-    elem.ondragenter = (event) => {event.preventDefault();};
-    elem.ondragover = (event) => {event.preventDefault();};
+    elem.ondragenter = (event) => {
+        event.preventDefault();
+        event.target.classList.replace("target", "targeted");
+    };
+    elem.ondragover = (event) => { event.preventDefault();};
+    elem.ondragleave = (event) => {
+        event.preventDefault();
+        event.target.classList.replace("targeted", "target");
+    };
     elem.ondrop = (event) => {
         event.preventDefault();
 
@@ -149,6 +159,7 @@ function makeMove(target){
         //UPDATE TARGET SQUARE
         target.classList.replace(targetPiece, draggedPiece);
         target.setAttribute("draggable", true);
+        target.classList.remove("targeted");
 
         //UPDATE STARTING SQUARE
         e.classList.replace(draggedPiece, "Empty");
@@ -164,8 +175,7 @@ function makeMove(target){
         });
 
         //PRINT MOVE
-        console.log("move: " + m.san);
-        console.log(m.color);
+        console.log(m.san);
 
         //HANDLE EVERY CASE (Move, Capture, Castle, Enpassant, Promotion, check, and checkMate) AND PLAY SOUNDS
         let p;
@@ -224,11 +234,11 @@ function makeMove(target){
             checkmate_sound.play();
         }else{
             let temp = document.getElementsByClassName("inCheck")[0];
-            console.log(temp);
             if(temp) temp.classList.remove("inCheck");
         }
 
     }else{
+        //Play ERROR SOUND
         console.log("illegal move");
     }
 
@@ -236,10 +246,8 @@ function makeMove(target){
 
 function markKing(color){
     if(color == "w"){
-        console.log("white");
         document.getElementsByClassName("k")[0].classList.add("inCheck");
     }else{
-        console.log("black");
         document.getElementsByClassName("K")[0].classList.add("inCheck");
     }
 };

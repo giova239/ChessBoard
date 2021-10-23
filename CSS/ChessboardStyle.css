@@ -22,11 +22,18 @@
     background: lime;
     filter: drop-shadow(0 0 0.4rem lime);
 }
-.target{
-    filter: drop-shadow(0 0 0.7rem darkOrange);
+.Empty.targeted{
+    margin:auto;
+    width: 90px;
+    height: 90px;
+    background: lime;
+    filter: drop-shadow(0 0 0.4rem lime);
 }
-.inCheck{
-    filter: drop-shadow(0 0 1rem red);
+.target, .inCheck{
+    filter: drop-shadow(0 0 0.7rem red);
+}
+.targeted{
+    filter: drop-shadow(0 0 0.7rem red) invert(25%);
 }
 
 /* BOARD */
