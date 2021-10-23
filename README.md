@@ -1,10 +1,10 @@
 ========INSTALL THIS BEFORE OPENING HTML TO LOAD LOCAL RESOURCES:========
 
 Install ->
-npm install -g http-server
+<npm install -g http-server>
 
 Run Server ->
-http-server ./
+<http-server ./>
 
 
 

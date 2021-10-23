@@ -1,5 +1,10 @@
-//IMPORT Chess.js OPEN SOURCE LIBRARY
+//IMPORT SOUNDS and DECLARE CHESS object
 let chess;
+let move_sound = new Audio ("http://localhost:8080/ASSETS/SOUNDS/Move.mp3");
+let capture_sound = new Audio ("http://localhost:8080/ASSETS/SOUNDS/Capture.mp3");
+let castle_sound = new Audio ("http://localhost:8080/ASSETS/SOUNDS/Castle.mp3");
+let check_sound = new Audio ("http://localhost:8080/ASSETS/SOUNDS/Check.mp3");
+let checkmate_sound = new Audio ("http://localhost:8080/ASSETS/SOUNDS/Checkmate.mp3");
 
 //BOARD HANDLING
 let board = document.getElementsByTagName("Board")[0];
@@ -90,7 +95,6 @@ let squares = document.getElementsByTagName("Square");
 
             //GET LEGAL MOVES
             let legalMoves = chess.moves({square: elem.classList[0], verbose: true});
-            console.log("Legal Moves: " + legalMoves);
 
             //ADD NEW MARKS
             elem.classList.add("selected");
@@ -141,6 +145,7 @@ function makeMove(target){
     
     let m = chess.move({from: draggedSquare,to: targetSquare, promotion: 'q'});
     if(m){
+
         //UPDATE TARGET SQUARE
         target.classList.replace(targetPiece, draggedPiece);
         target.setAttribute("draggable", true);
@@ -160,41 +165,81 @@ function makeMove(target){
 
         //PRINT MOVE
         console.log("move: " + m.san);
+        console.log(m.color);
 
-        //HANDLE SPECIAL CASES (Castle, Enpassant and Promotion)
-        if(m.flags == "k"){//short castle
-            if(m.color == "w"){
-                document.getElementsByClassName("h1")[0].classList.replace("R","Empty");
-                document.getElementsByClassName("f1")[0].classList.replace("Empty","R");
-            }else{
-                document.getElementsByClassName("h8")[0].classList.replace("r","Empty");
-                document.getElementsByClassName("f8")[0].classList.replace("Empty","r");
-            }
-        }else if(m.flags == "q"){//long castle
-            if(m.color == "w"){
-                document.getElementsByClassName("a1")[0].classList.replace("R","Empty");
-                document.getElementsByClassName("d1")[0].classList.replace("Empty","R");
-            }else{
-                document.getElementsByClassName("a8")[0].classList.replace("r","Empty");
-                document.getElementsByClassName("d8")[0].classList.replace("Empty","r");
-            }
-        }else if(m.flags == "e"){//enpassant
-            let p = m.to[0]+m.from[1];
-            if(m.color == "w")
-                document.getElementsByClassName(p)[0].classList.replace("p","Empty");
-            else
-                document.getElementsByClassName(p)[0].classList.replace("P","Empty");
-        }else if(m.flags == "np" || m.flags == "cp"){//promotion
-            let p = m.to;
-            if(m.color == "w")
-                document.getElementsByClassName(p)[0].classList.replace("P","Q");
-            else
-                document.getElementsByClassName(p)[0].classList.replace("p","q");
+        //HANDLE EVERY CASE (Move, Capture, Castle, Enpassant, Promotion, check, and checkMate) AND PLAY SOUNDS
+        let p;
+        switch(m.flags){
+            case "n": case "b": //non-capture move
+                move_sound.play();
+                break;
+            case "c": //capture move
+                capture_sound.play();
+                break;
+            case "k": //short castle
+                castle_sound.play();
+                if(m.color == "w"){
+                    document.getElementsByClassName("h1")[0].classList.replace("R","Empty");
+                    document.getElementsByClassName("f1")[0].classList.replace("Empty","R");
+                }else{
+                    document.getElementsByClassName("h8")[0].classList.replace("r","Empty");
+                    document.getElementsByClassName("f8")[0].classList.replace("Empty","r");
+                }
+                break;
+            case "q": //long castle
+                castle_sound.play();
+                if(m.color == "w"){
+                    document.getElementsByClassName("a1")[0].classList.replace("R","Empty");
+                    document.getElementsByClassName("d1")[0].classList.replace("Empty","R");
+                }else{
+                    document.getElementsByClassName("a8")[0].classList.replace("r","Empty");
+                    document.getElementsByClassName("d8")[0].classList.replace("Empty","r");
+                }
+                break;
+            case "e": //enpassant
+                capture_sound.play()
+                p = m.to[0]+m.from[1];
+                if(m.color == "w")
+                    document.getElementsByClassName(p)[0].classList.replace("p","Empty");
+                else
+                    document.getElementsByClassName(p)[0].classList.replace("P","Empty");
+                break;
+            case "np": case "cp": //promotion
+                p = m.to;
+                if(m.color == "w")
+                    document.getElementsByClassName(p)[0].classList.replace("P","Q");
+                else
+                    document.getElementsByClassName(p)[0].classList.replace("p","q");
+                break;
+            default:
+                break;
         }
-
+        //CHECKS and CHECKMATE
+        let lastSymbol = m.san[m.san.length-1];
+        if(lastSymbol == "+"){
+            markKing(m.color);
+            check_sound.play();
+        }else if (lastSymbol == "#"){
+            markKing(m.color);
+            checkmate_sound.play();
+        }else{
+            let temp = document.getElementsByClassName("inCheck")[0];
+            console.log(temp);
+            if(temp) temp.classList.remove("inCheck");
+        }
 
     }else{
         console.log("illegal move");
     }
 
 }
+
+function markKing(color){
+    if(color == "w"){
+        console.log("white");
+        document.getElementsByClassName("k")[0].classList.add("inCheck");
+    }else{
+        console.log("black");
+        document.getElementsByClassName("K")[0].classList.add("inCheck");
+    }
+};
