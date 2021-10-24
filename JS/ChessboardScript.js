@@ -76,7 +76,7 @@ let squares = document.getElementsByTagName("Square");
     elem.onmousedown = () => {
 
         //CLICKED ON A TARGET
-        if(elem.classList.contains("target")){
+        if(elem.classList.contains("targeted")){
 
             //CALLING THE MAKEMOVE FUNCTION
             makeMove(elem);
@@ -109,6 +109,14 @@ let squares = document.getElementsByTagName("Square");
 
         }
 
+    };
+
+    //Mouse Overing
+    elem.onmouseenter = () => {
+        elem.classList.replace("target", "targeted");
+    };
+    elem.onmouseleave = () => {
+        elem.classList.replace("targeted", "target");
     };
 
     //Mouse Dragging
