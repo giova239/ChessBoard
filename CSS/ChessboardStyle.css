@@ -38,6 +38,8 @@
 
 /* BOARD */
 Board{
+    position: absolute;
+    z-index: 1;
     display: grid;
     margin: 20px;
     grid-template-columns: repeat(8, 1fr);
@@ -56,22 +58,25 @@ Board > Square{
 
 /* ARROWS */
 ArrowGrid{
-    position: sticky;
+    position: absolute;
+    z-index: 2;
     display: grid;
     margin: 20px;
     grid-template-columns: repeat(8, 1fr);
     grid-template-rows: repeat(8, 1fr);
     width: 800px;
     height: 800px;
-    background: url("http://localhost:8080/ASSETS/BOARDS/Chess_Board2.svg");
-    background-size: cover;
-    box-shadow: 0px 0px 20px 5px black;
 }
 
 ArrowGrid > Arrow{
     width: 100px;
     height: 100px;
     background: darkorange;
+}
+
+.None{
+    width: 0px;
+    height: 0px;
 }
 
 /* SQUARES NAMES */

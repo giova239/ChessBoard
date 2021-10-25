@@ -47,6 +47,17 @@ if (board && board.hasAttribute("data-FEN")){
                 break;
         }
     });
+
+    //AROWGRID HANDLING
+    let arrowGrid = document.getElementsByTagName("ArrowGrid")[0];
+
+    if(arrowGrid){
+        [...squareNames].forEach((c)=>{
+            let newArrow = document.createElement("Arrow");
+            newArrow.classList.add(c, "None");
+            arrowGrid.appendChild(newArrow);
+        });
+    }
 } 
 
 
