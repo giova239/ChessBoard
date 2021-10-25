@@ -36,6 +36,40 @@
     filter: drop-shadow(0 0 0.7rem red) invert(25%);
 }
 
+/* ARROWS */
+.startup{
+    margin: auto;
+    width: 20px;
+    height: 50px;
+    background: darkorange;
+    filter: drop-shadow(0 0 0.4rem darkorange);
+    transform: translate(0px, -25px);
+}
+.startright{
+    margin: auto;
+    width: 50px;
+    height: 20px;
+    background: darkorange;
+    filter: drop-shadow(0 0 0.4rem darkorange);
+    transform: translate(25px, 0px);
+}
+.startdown{
+    margin: auto;
+    width: 20px;
+    height: 50px;
+    background: darkorange;
+    filter: drop-shadow(0 0 0.4rem darkorange);
+    transform: translate(0px, 25px);
+}
+.startleft{
+    margin: auto;
+    width: 50px;
+    height: 20px;
+    background: darkorange;
+    filter: drop-shadow(0 0 0.4rem darkorange);
+    transform: translate(-25px, 0px);
+}
+
 /* BOARD */
 Board{
     display: grid;
