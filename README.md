@@ -13,8 +13,6 @@ Run Server ->
 
 ## TODOS ##
 
-### #TODO: fix Drag and click HitBoxes ###
-### #TODO: complete missing sounds ###
 ### #TODO: add move List ###
   
 <br>
