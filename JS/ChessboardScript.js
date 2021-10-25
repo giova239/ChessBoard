@@ -371,6 +371,96 @@ function drawArrow(from, to) {
                 }
                 setArrow(to, "downrightarrow");
             }
+        }else if (Math.abs(columnsDiff) > Math.abs(rowsDiff)){
+            //horizontal edge vertical
+            if(columnsDiff > 0){
+                //horizontalleft
+                setArrow(from, "startleft");
+                for(let i = 1; i < columnsDiff; i++){
+                    setArrow(String.fromCharCode(from.charCodeAt(0)-i) + from[1], "horizontal");
+                }
+                if(rowsDiff > 0){
+                    //verticaldown
+                    setArrow(String.fromCharCode(from.charCodeAt(0) - columnsDiff) + from[1] , "rightdown");
+                    for(let i = 1; i < rowsDiff; i++){
+                        setArrow(to[0] + String.fromCharCode(to.charCodeAt(1)+i), "vertical");
+                    }
+                    setArrow(to, "downarrow");
+                }else{
+                    //verticalup
+                    setArrow(String.fromCharCode(from.charCodeAt(0) - columnsDiff) + from[1], "upright");
+                    for(let i = 1; i < -rowsDiff; i++){
+                        setArrow(to[0] + String.fromCharCode(to.charCodeAt(1)-i), "vertical");
+                    }
+                    setArrow(to, "uparrow");
+                }
+            }else{
+                //horizontalright
+                setArrow(from, "startright");
+                for(let i = 1; i < -columnsDiff; i++){
+                    setArrow(String.fromCharCode(from.charCodeAt(0)+i) + from[1], "horizontal");
+                }
+                if(rowsDiff > 0){
+                    //verticaldown
+                    setArrow(String.fromCharCode(from.charCodeAt(0) - columnsDiff) + from[1] , "downleft");
+                    for(let i = 1; i < rowsDiff; i++){
+                        setArrow(to[0] + String.fromCharCode(to.charCodeAt(1)+i), "vertical");
+                    }
+                    setArrow(to, "downarrow");
+                }else{
+                    //verticalup
+                    setArrow(String.fromCharCode(from.charCodeAt(0) - columnsDiff) + from[1], "leftup");
+                    for(let i = 1; i < -rowsDiff; i++){
+                        setArrow(to[0] + String.fromCharCode(to.charCodeAt(1)-i), "vertical");
+                    }
+                    setArrow(to, "uparrow");
+                }
+            }
+        }else{
+            //vertical edge horizontal
+            if(rowsDiff > 0){
+                //vertical down
+                setArrow(from, "startdown");
+                for(let i = 1; i < rowsDiff; i++){
+                    setArrow(from[0] + String.fromCharCode(from.charCodeAt(1)-i), "vertical");
+                }
+                if(columnsDiff > 0){
+                    //horizontalleft
+                    setArrow(from[0] + String.fromCharCode(from.charCodeAt(1) - rowsDiff) , "leftup");
+                    for(let i = 1; i < columnsDiff; i++){
+                        setArrow(String.fromCharCode(to.charCodeAt(0)+i) + to[1], "horizontal");
+                    }
+                    setArrow(to, "leftarrow");
+                }else{
+                    //horizontalright
+                    setArrow(from[0] + String.fromCharCode(from.charCodeAt(1) - rowsDiff), "upright");
+                    for(let i = 1; i < -columnsDiff; i++){
+                        setArrow(String.fromCharCode(to.charCodeAt(0)-i) + to[1], "horizontal");
+                    }
+                    setArrow(to, "rightarrow");
+                }
+            }else{
+                //vertical up
+                setArrow(from, "startup");
+                for(let i = 1; i < -rowsDiff; i++){
+                    setArrow(from[0] + String.fromCharCode(from.charCodeAt(1)+i), "vertical");
+                }
+                if(columnsDiff > 0){
+                    //horizontalleft
+                    setArrow(from[0] + String.fromCharCode(from.charCodeAt(1) - rowsDiff) , "downleft");
+                    for(let i = 1; i < columnsDiff; i++){
+                        setArrow(String.fromCharCode(to.charCodeAt(0)+i) + to[1], "horizontal");
+                    }
+                    setArrow(to, "leftarrow");
+                }else{
+                    //horizontalright
+                    setArrow(from[0] + String.fromCharCode(from.charCodeAt(1) - rowsDiff), "rightdown");
+                    for(let i = 1; i < -columnsDiff; i++){
+                        setArrow(String.fromCharCode(to.charCodeAt(0)-i) + to[1], "horizontal");
+                    }
+                    setArrow(to, "rightarrow");
+                }
+            }
         }
     }
 }

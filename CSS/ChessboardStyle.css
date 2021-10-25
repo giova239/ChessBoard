@@ -464,7 +464,7 @@ ArrowGrid > Arrow{
 }
 
 /* edge lines */
-.topright{
+.upright{
     clip-path: polygon(40% 0%, 40% 60%, 100% 60%, 100% 40%, 60% 40%, 60% 0%);
 }
 .rightdown{
