@@ -14,15 +14,23 @@
 }
 
 /* TARGET STYLES */
+.Empty{
+    opacity: 0%;
+    margin:auto;
+    transition-duration: 10ms;
+}
 .Empty.target{
+    opacity: 100%;
     margin:auto;
     width: 35px;
     height: 35px;
     border-radius: 50%;
     background: lime;
     filter: drop-shadow(0 0 0.4rem lime);
+    transition-duration: 200ms;
 }
 .Empty.targeted{
+    opacity: 100%;
     margin:auto;
     width: 90px;
     height: 90px;
@@ -54,6 +62,9 @@ Board{
 Board > Square{
     width: 100px;
     height: 100px;
+    transition: all;
+    transition-timing-function: ease;
+    transition-duration: 200ms;
 }
 
 /* ARROWS */
@@ -73,10 +84,12 @@ ArrowGrid > Arrow{
     width: 100px;
     height: 100px;
     background: darkorange;
+    transition: all .4s;
 }
 
 .None{
-    background:transparent;
+    opacity: 0%;
+    transition: ease;
 }
 
 /* SQUARES NAMES */
@@ -392,6 +405,17 @@ ArrowGrid > Arrow{
 }
 
 /* ARROWS NAMES */
+/*one square*/
+.highlighted{
+    background: transparent;
+    margin: auto;
+    height: 60px;
+    width: 60px;
+    border-radius: 50%;
+    border: 4px solid red;
+    transform: scale(1.7);
+    transition: all .3s;
+}
 
 /* start lines */
 .startup{
@@ -469,7 +493,7 @@ ArrowGrid > Arrow{
     transform: scale(1.4);
 }
 .downarrow{
-    clip-path: polygon(40% 100%, 40% 60%, 30% 60%, 50% 40%, 70% 60%, 60% 60%, 60% 100%);
+    clip-path: polygon(40% 0%, 40% 40%, 30% 40%, 50% 60%, 70% 40%, 60% 40%, 60% 0%);
 }
 .downleftarrow{
     clip-path: polygon(85% 5%, 95% 15%, 65% 45%, 70% 50%, 50% 50%, 50% 30%, 55% 35%);

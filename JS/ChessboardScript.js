@@ -294,8 +294,89 @@ function removeMarks() {
 }
 
 function drawArrow(from, to) {
-    console.log(arrowStart + " -> " + to);
+    console.log(from + " -> " + to);
+
     if(from == to){
-        document.querySelector("arrow." + from).classList.replace("None", "startup");
+        //Highlight
+        setArrow(from, "highlighted");
+    }else{
+        let columnsDiff = from.charCodeAt(0) - to.charCodeAt(0);
+        let rowsDiff = from[1] - to[1]
+        console.log("[ " + columnsDiff + " , " + rowsDiff + " ]");
+
+        if(columnsDiff == 0){
+            //Vertical Line
+            if(rowsDiff > 0){
+                //down
+                setArrow(from, "startdown");
+                for(let i = 1; i < rowsDiff; i++){
+                    setArrow(from[0] + String.fromCharCode(from.charCodeAt(1)-i), "vertical");
+                }
+                setArrow(to, "downarrow");
+            }else{
+                //up
+                setArrow(from, "startup");
+                for(let i = 1; i < -rowsDiff; i++){
+                    setArrow(from[0] + String.fromCharCode(from.charCodeAt(1)+i), "vertical");
+                }
+                setArrow(to, "uparrow");
+            }
+        }else if(rowsDiff == 0){
+            //Horizontal Line
+            if(columnsDiff > 0){
+                //left
+                setArrow(from, "startleft");
+                for(let i = 1; i < columnsDiff; i++){
+                    setArrow(String.fromCharCode(from.charCodeAt(0)-i) + from[1], "horizontal");
+                }
+                setArrow(to, "leftarrow");
+            }else{
+                //right
+                setArrow(from, "startright");
+                for(let i = 1; i < -columnsDiff; i++){
+                    setArrow(String.fromCharCode(from.charCodeAt(0)+i) + from[1], "horizontal");
+                }
+                setArrow(to, "rightarrow");
+            }
+        //Oblique Line
+        }else if (columnsDiff-rowsDiff == 0){
+            if(columnsDiff > 0){
+                //downleft
+                setArrow(from, "startdownleft");
+                for(let i = 1; i < rowsDiff; i++){
+                    setArrow(String.fromCharCode(from.charCodeAt(0)-i) + String.fromCharCode(from.charCodeAt(1)-i), "oblique1");
+                }
+                setArrow(to, "downleftarrow");
+            }else{
+                //upright
+                setArrow(from, "startupright");
+                for(let i = 1; i < -rowsDiff; i++){
+                    setArrow(String.fromCharCode(from.charCodeAt(0)+i) + String.fromCharCode(from.charCodeAt(1)+i), "oblique1");
+                }
+                setArrow(to, "uprightarrow");
+            }
+        }else if (columnsDiff+rowsDiff == 0){
+            if(columnsDiff > 0){
+                //upleft
+                setArrow(from, "startupleft");
+                for(let i = 1; i < -rowsDiff; i++){
+                    setArrow(String.fromCharCode(from.charCodeAt(0)-i) + String.fromCharCode(from.charCodeAt(1)+i), "oblique2");
+                }
+                setArrow(to, "upleftarrow");
+            }else{
+                //downright
+                setArrow(from, "startdownright");
+                for(let i = 1; i < rowsDiff; i++){
+                    setArrow(String.fromCharCode(from.charCodeAt(0)+i) + String.fromCharCode(from.charCodeAt(1)-i), "oblique2");
+                }
+                setArrow(to, "downrightarrow");
+            }
+        }
     }
+}
+
+function setArrow (square, arrow){
+    let a = document.querySelector("arrow." + square).classList;
+    let toRemove = a[1];
+    a.replace(toRemove, arrow);
 }
