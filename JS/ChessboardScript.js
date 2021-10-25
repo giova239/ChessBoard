@@ -87,17 +87,7 @@ if (board && board.hasAttribute("data-FEN")){
                 }else{
 
                     //REMOVE OLD marks
-                    [...document.getElementsByClassName("selected")].forEach((other)=>{
-                        other.classList.remove("selected");
-                        other.classList.remove("overing");
-                    });
-                    [...document.getElementsByClassName("target")].forEach((other)=>{
-                        other.classList.remove("target");
-                    });
-                    [...document.getElementsByClassName("targeted")].forEach((other)=>{
-                        other.classList.remove("targeted");
-                    });
-
+                    removeMarks();
                     //GET LEGAL MOVES
                     let legalMoves = chess.moves({square: elem.classList[0], verbose: true});
 
@@ -119,7 +109,7 @@ if (board && board.hasAttribute("data-FEN")){
 
         elem.onmouseup = (event) => {
             if(event.button == 2){
-                console.log(arrowStart + " -> " + elem.classList[0]);
+                drawArrow(arrowStart, elem.classList[0]);
             }
         };
 
@@ -186,8 +176,10 @@ function makeMove(target){
     let draggedSquare = e.classList[0];
     let targetSquare = target.classList[0];
 
+    //REMOVE OLD marks
+    removeMarks();
+
     //CHECK IF MOVE IS LEGAL
-    
     let m = chess.move({from: draggedSquare,to: targetSquare, promotion: 'q'});
     if(m){
 
@@ -199,15 +191,6 @@ function makeMove(target){
         //UPDATE STARTING SQUARE
         e.classList.replace(draggedPiece, "Empty");
         e.setAttribute("draggable", false);
-
-        //REMOVE MARKS
-        [...document.getElementsByClassName("selected")].forEach((other)=>{
-            other.classList.remove("selected");
-            other.classList.remove("overing");
-        });
-        [...document.getElementsByClassName("target")].forEach((other)=>{
-            other.classList.remove("target");
-        });
 
         //PRINT MOVE
         console.log(m.san);
@@ -285,10 +268,34 @@ function makeMove(target){
 
 }
 
-function markKing(color){
+function markKing(color) {
     if(color == "w"){
         document.getElementsByClassName("k")[0].classList.add("inCheck");
     }else{
         document.getElementsByClassName("K")[0].classList.add("inCheck");
     }
-};
+}
+
+function removeMarks() {
+    [...document.getElementsByClassName("selected")].forEach((other)=>{
+        other.classList.remove("selected");
+        other.classList.remove("overing");
+    });
+    [...document.getElementsByClassName("target")].forEach((other)=>{
+        other.classList.remove("target");
+    });
+    [...document.getElementsByClassName("targeted")].forEach((other)=>{
+        other.classList.remove("targeted");
+    });
+    [...document.getElementsByTagName("Arrow")].forEach((other)=>{
+        let toRemove = other.classList[1];
+        other.classList.replace(toRemove, "None");
+    });
+}
+
+function drawArrow(from, to) {
+    console.log(arrowStart + " -> " + to);
+    if(from == to){
+        document.querySelector("arrow." + from).classList.replace("None", "startup");
+    }
+}
