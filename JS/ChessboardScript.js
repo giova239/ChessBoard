@@ -5,6 +5,8 @@ let capture_sound = new Audio ("http://localhost:8080/ASSETS/SOUNDS/Capture.mp3"
 let castle_sound = new Audio ("http://localhost:8080/ASSETS/SOUNDS/Castle.mp3");
 let check_sound = new Audio ("http://localhost:8080/ASSETS/SOUNDS/Check.mp3");
 let checkmate_sound = new Audio ("http://localhost:8080/ASSETS/SOUNDS/Checkmate.mp3");
+let error_sound = new Audio ("http://localhost:8080/ASSETS/SOUNDS/Error.mp3");
+let arrowStart;
 
 //BOARD HANDLING
 let board = document.getElementsByTagName("Board")[0];
@@ -48,6 +50,120 @@ if (board && board.hasAttribute("data-FEN")){
         }
     });
 
+    //SQUARES AND PIECES HANDLING
+    let squares = document.getElementsByTagName("Square");
+
+    [...squares].forEach((elem)=> {
+
+        //Make Pieces Draggable
+        if(elem.classList.contains("Empty")){
+            elem.setAttribute("draggable", false);
+        }else{
+            elem.setAttribute("draggable", true);
+        }
+
+        //Mouse overing
+        elem.onmouseover = () => {
+            elem.classList.add("overing");
+        };
+
+        elem.onmouseout = () => {
+            if(!elem.classList.contains("selected"))
+            elem.classList.remove("overing");
+        };
+
+        //Mouse clicking
+        elem.onmousedown = (event) => {
+
+            //LEFT CLICK
+            if(event.button == 0){
+                //CLICKED ON A TARGET
+                if(elem.classList.contains("targeted")){
+
+                    //CALLING THE MAKEMOVE FUNCTION
+                    makeMove(elem);
+
+                //CLICKED ON A PIECE
+                }else{
+
+                    //REMOVE OLD marks
+                    [...document.getElementsByClassName("selected")].forEach((other)=>{
+                        other.classList.remove("selected");
+                        other.classList.remove("overing");
+                    });
+                    [...document.getElementsByClassName("target")].forEach((other)=>{
+                        other.classList.remove("target");
+                    });
+                    [...document.getElementsByClassName("targeted")].forEach((other)=>{
+                        other.classList.remove("targeted");
+                    });
+
+                    //GET LEGAL MOVES
+                    let legalMoves = chess.moves({square: elem.classList[0], verbose: true});
+
+                    //ADD NEW MARKS
+                    elem.classList.add("selected");
+                    [...legalMoves].forEach((move) => {
+                        let squareName = move.to;
+                        document.getElementsByClassName(squareName)[0].classList.add("target");
+
+                    });
+
+                }
+            //RIGHT CLICK
+            }else{
+                arrowStart = elem.classList[0];
+            }
+
+        };
+
+        elem.onmouseup = (event) => {
+            if(event.button == 2){
+                console.log(arrowStart + " -> " + elem.classList[0]);
+            }
+        };
+
+        //Mouse RIGHT CLICK prevent menu from opening
+        elem.oncontextmenu = (event) => {event.preventDefault();};
+
+        //Mouse Overing
+        elem.onmouseenter = () => {
+            elem.classList.replace("target", "targeted");
+        };
+        elem.onmouseleave = () => {
+            elem.classList.replace("targeted", "target");
+        };
+
+        //Mouse Dragging
+        elem.ondragstart = (event) => {
+            event.dataTransfer.effectAllowed = "move";
+            elem.id = "dragging";
+        };
+
+        elem.ondragend = () => {
+            elem.removeAttribute("id");
+        };
+
+        //Mouse Dropping
+        elem.ondragenter = (event) => {
+            event.preventDefault();
+            event.target.classList.replace("target", "targeted");
+        };
+        elem.ondragover = (event) => { event.preventDefault();};
+        elem.ondragleave = (event) => {
+            event.preventDefault();
+            event.target.classList.replace("targeted", "target");
+        };
+        elem.ondrop = (event) => {
+            event.preventDefault();
+
+            //CALLING THE MAKEMOVE FUNCTION
+            makeMove(event.target);
+
+        };
+
+    })
+
     //AROWGRID HANDLING
     let arrowGrid = document.getElementsByTagName("ArrowGrid")[0];
 
@@ -59,106 +175,6 @@ if (board && board.hasAttribute("data-FEN")){
         });
     }
 } 
-
-
-//SQUARES AND PIECES HANDLING
-let squares = document.getElementsByTagName("Square");
-
-[...squares].forEach((elem)=> {
-
-    //Make Pieces Draggable
-    if(elem.classList.contains("Empty")){
-        elem.setAttribute("draggable", false);
-    }else{
-        elem.setAttribute("draggable", true);
-    }
-
-    //Mouse overing
-    elem.onmouseover = () => {
-        elem.classList.add("overing");
-    };
-
-    elem.onmouseout = () => {
-        if(!elem.classList.contains("selected"))
-        elem.classList.remove("overing");
-    };
-
-    //Mouse cliccking
-    elem.onmousedown = () => {
-
-        //CLICKED ON A TARGET
-        if(elem.classList.contains("targeted")){
-
-            //CALLING THE MAKEMOVE FUNCTION
-            makeMove(elem);
-
-        //CLICKED ON A PIECE
-        }else{
-
-            //REMOVE OLD marks
-            [...document.getElementsByClassName("selected")].forEach((other)=>{
-                other.classList.remove("selected");
-                other.classList.remove("overing");
-            });
-            [...document.getElementsByClassName("target")].forEach((other)=>{
-                other.classList.remove("target");
-            });
-            [...document.getElementsByClassName("targeted")].forEach((other)=>{
-                other.classList.remove("targeted");
-            });
-
-            //GET LEGAL MOVES
-            let legalMoves = chess.moves({square: elem.classList[0], verbose: true});
-
-            //ADD NEW MARKS
-            elem.classList.add("selected");
-            [...legalMoves].forEach((move) => {
-                let squareName = move.to;
-                document.getElementsByClassName(squareName)[0].classList.add("target");
-
-            });
-
-        }
-
-    };
-
-    //Mouse Overing
-    elem.onmouseenter = () => {
-        elem.classList.replace("target", "targeted");
-    };
-    elem.onmouseleave = () => {
-        elem.classList.replace("targeted", "target");
-    };
-
-    //Mouse Dragging
-    elem.ondragstart = (event) => {
-        event.dataTransfer.effectAllowed = "move";
-        elem.id = "dragging";
-    };
-
-    elem.ondragend = () => {
-        elem.removeAttribute("id");
-    };
-
-    //Mouse Dropping
-    elem.ondragenter = (event) => {
-        event.preventDefault();
-        event.target.classList.replace("target", "targeted");
-    };
-    elem.ondragover = (event) => { event.preventDefault();};
-    elem.ondragleave = (event) => {
-        event.preventDefault();
-        event.target.classList.replace("targeted", "target");
-    };
-    elem.ondrop = (event) => {
-        event.preventDefault();
-
-        //CALLING THE MAKEMOVE FUNCTION
-        makeMove(event.target);
-
-    };
-
-})
 
 function makeMove(target){
 
@@ -234,6 +250,11 @@ function makeMove(target){
                     document.getElementsByClassName(p)[0].classList.replace("P","Empty");
                 break;
             case "np": case "cp": //promotion
+                if(m.flags == "np"){
+                    move_sound.play();
+                }else{
+                    capture_sound.play();
+                }
                 p = m.to;
                 if(m.color == "w")
                     document.getElementsByClassName(p)[0].classList.replace("P","Q");
@@ -258,6 +279,7 @@ function makeMove(target){
 
     }else{
         //Play ERROR SOUND
+        error_sound.play
         console.log("illegal move");
     }
 
