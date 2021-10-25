@@ -9,7 +9,7 @@ let checkmate_sound = new Audio ("http://localhost:8080/ASSETS/SOUNDS/Checkmate.
 //BOARD HANDLING
 let board = document.getElementsByTagName("Board")[0];
 
-if (board){
+if (board && board.hasAttribute("data-FEN")){
 
     let FEN_string = board.getAttribute("data-FEN");
     chess = new Chess(FEN_string);
