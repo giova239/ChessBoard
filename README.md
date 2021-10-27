@@ -15,6 +15,14 @@ Run Server ->
 ## TODOS ##
 
 ### #TODO: add move List ###
+### #TODO: make each arrow create a new overlayed grid ###
+### #TODO: implement stockfish ###
+### #TODO: analisis tool ###
+### #TODO: playing opponents: Online and Offline(Bot) ###
+### #TODO: torunament mode ###
+### #TODO: chess groups ###
+### #TODO: *Teaching tool*: a teacher can load a shared board and ask each student to play a move ###
+### #TODO: NodeJS Backend ###
   
 <br>
   
