@@ -1,4 +1,5 @@
 # CHESSBOARAD CSS and JS GUI using open source chess.js LIBRARY #
+https://github.com/jhlywa/chess.js/blob/master/README.md
 <br><br>
 
 ## INSTALL THIS BEFORE OPENING HTML TO LOAD LOCAL RESOURCES: ##
